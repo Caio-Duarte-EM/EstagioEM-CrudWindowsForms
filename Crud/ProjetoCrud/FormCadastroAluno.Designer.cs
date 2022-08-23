@@ -28,6 +28,9 @@ partial class FormCadastroAluno
     private void InitializeComponent()
     {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.textBoxMatricula = new System.Windows.Forms.TextBox();
             this.groupBoxNovoAluno = new System.Windows.Forms.GroupBox();
             this.comboBoxSexo = new System.Windows.Forms.ComboBox();
@@ -62,6 +65,7 @@ partial class FormCadastroAluno
             this.textBoxMatricula.Location = new System.Drawing.Point(6, 51);
             this.textBoxMatricula.MaxLength = 9;
             this.textBoxMatricula.Name = "textBoxMatricula";
+            this.textBoxMatricula.ShortcutsEnabled = false;
             this.textBoxMatricula.Size = new System.Drawing.Size(104, 23);
             this.textBoxMatricula.TabIndex = 0;
             this.textBoxMatricula.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
@@ -81,7 +85,7 @@ partial class FormCadastroAluno
             this.groupBoxNovoAluno.Controls.Add(this.textBoxNome);
             this.groupBoxNovoAluno.Controls.Add(this.textBoxMatricula);
             this.groupBoxNovoAluno.Controls.Add(this.labelMatricula);
-            this.groupBoxNovoAluno.Location = new System.Drawing.Point(12, 12);
+            this.groupBoxNovoAluno.Location = new System.Drawing.Point(12, 14);
             this.groupBoxNovoAluno.Name = "groupBoxNovoAluno";
             this.groupBoxNovoAluno.Size = new System.Drawing.Size(743, 161);
             this.groupBoxNovoAluno.TabIndex = 0;
@@ -90,6 +94,7 @@ partial class FormCadastroAluno
             // 
             // comboBoxSexo
             // 
+            this.comboBoxSexo.BackColor = System.Drawing.SystemColors.Control;
             this.comboBoxSexo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSexo.Items.AddRange(new object[] {
             "Masculino",
@@ -101,16 +106,17 @@ partial class FormCadastroAluno
             // 
             // textBoxCPF
             // 
-            this.textBoxCPF.Location = new System.Drawing.Point(252, 109);
+            this.textBoxCPF.Location = new System.Drawing.Point(252, 111);
             this.textBoxCPF.MaxLength = 11;
             this.textBoxCPF.Name = "textBoxCPF";
+            this.textBoxCPF.ShortcutsEnabled = false;
             this.textBoxCPF.Size = new System.Drawing.Size(242, 23);
             this.textBoxCPF.TabIndex = 4;
-            this.textBoxCPF.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxCPF_KeyPress);
+            this.textBoxCPF.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxMatricula_KeyPress);
             // 
             // maskedTextBoxNascimento
             // 
-            this.maskedTextBoxNascimento.Location = new System.Drawing.Point(126, 109);
+            this.maskedTextBoxNascimento.Location = new System.Drawing.Point(126, 111);
             this.maskedTextBoxNascimento.Mask = "00/00/0000";
             this.maskedTextBoxNascimento.Name = "maskedTextBoxNascimento";
             this.maskedTextBoxNascimento.Size = new System.Drawing.Size(100, 23);
@@ -119,22 +125,28 @@ partial class FormCadastroAluno
             // 
             // buttonAdicionarOuModificar
             // 
+            this.buttonAdicionarOuModificar.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonAdicionarOuModificar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightGreen;
+            this.buttonAdicionarOuModificar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonAdicionarOuModificar.Location = new System.Drawing.Point(626, 111);
             this.buttonAdicionarOuModificar.Name = "buttonAdicionarOuModificar";
-            this.buttonAdicionarOuModificar.Size = new System.Drawing.Size(107, 23);
+            this.buttonAdicionarOuModificar.Size = new System.Drawing.Size(107, 25);
             this.buttonAdicionarOuModificar.TabIndex = 6;
             this.buttonAdicionarOuModificar.Text = "Adicionar";
-            this.buttonAdicionarOuModificar.UseVisualStyleBackColor = true;
+            this.buttonAdicionarOuModificar.UseVisualStyleBackColor = false;
             this.buttonAdicionarOuModificar.Click += new System.EventHandler(this.ButtonAdicionarOuModificar_Click);
             // 
             // buttonLimparOuCancelar
             // 
-            this.buttonLimparOuCancelar.Location = new System.Drawing.Point(500, 109);
+            this.buttonLimparOuCancelar.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonLimparOuCancelar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightCoral;
+            this.buttonLimparOuCancelar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonLimparOuCancelar.Location = new System.Drawing.Point(500, 111);
             this.buttonLimparOuCancelar.Name = "buttonLimparOuCancelar";
             this.buttonLimparOuCancelar.Size = new System.Drawing.Size(107, 25);
             this.buttonLimparOuCancelar.TabIndex = 5;
             this.buttonLimparOuCancelar.Text = "Limpar";
-            this.buttonLimparOuCancelar.UseVisualStyleBackColor = true;
+            this.buttonLimparOuCancelar.UseVisualStyleBackColor = false;
             this.buttonLimparOuCancelar.Click += new System.EventHandler(this.ButtonLimparOuCancelar_Click);
             // 
             // labelCPF
@@ -178,6 +190,7 @@ partial class FormCadastroAluno
             this.textBoxNome.Location = new System.Drawing.Point(126, 51);
             this.textBoxNome.MaxLength = 100;
             this.textBoxNome.Name = "textBoxNome";
+            this.textBoxNome.ShortcutsEnabled = false;
             this.textBoxNome.Size = new System.Drawing.Size(607, 23);
             this.textBoxNome.TabIndex = 1;
             this.textBoxNome.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextBoxNome_KeyPress);
@@ -193,7 +206,7 @@ partial class FormCadastroAluno
             // 
             // textBoxPesquisa
             // 
-            this.textBoxPesquisa.Location = new System.Drawing.Point(12, 192);
+            this.textBoxPesquisa.Location = new System.Drawing.Point(12, 193);
             this.textBoxPesquisa.MaxLength = 100;
             this.textBoxPesquisa.Name = "textBoxPesquisa";
             this.textBoxPesquisa.Size = new System.Drawing.Size(607, 23);
@@ -202,12 +215,15 @@ partial class FormCadastroAluno
             // 
             // buttonPesquisa
             // 
-            this.buttonPesquisa.Location = new System.Drawing.Point(638, 192);
+            this.buttonPesquisa.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonPesquisa.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
+            this.buttonPesquisa.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonPesquisa.Location = new System.Drawing.Point(638, 193);
             this.buttonPesquisa.Name = "buttonPesquisa";
             this.buttonPesquisa.Size = new System.Drawing.Size(117, 23);
             this.buttonPesquisa.TabIndex = 8;
             this.buttonPesquisa.Text = "Pesquisar";
-            this.buttonPesquisa.UseVisualStyleBackColor = true;
+            this.buttonPesquisa.UseVisualStyleBackColor = false;
             this.buttonPesquisa.Click += new System.EventHandler(this.ButtonPesquisa_Click);
             // 
             // dataGridView1
@@ -216,7 +232,20 @@ partial class FormCadastroAluno
             this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.AllowUserToResizeColumns = false;
             this.dataGridView1.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Silver;
+            this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.AutoGenerateColumns = false;
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dataGridView1.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.SteelBlue;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle2.Padding = new System.Windows.Forms.Padding(1);
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.SteelBlue;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Transparent;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.matriculaDataGridViewTextBoxColumn,
@@ -225,12 +254,24 @@ partial class FormCadastroAluno
             this.nascimentoDataGridViewTextBoxColumn,
             this.cpfDataGridViewTextBoxColumn});
             this.dataGridView1.DataSource = this.alunoBindingSource;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.LightSkyBlue;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dataGridView1.DefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.EditMode = System.Windows.Forms.DataGridViewEditMode.EditProgrammatically;
-            this.dataGridView1.Location = new System.Drawing.Point(12, 221);
+            this.dataGridView1.EnableHeadersVisualStyles = false;
+            this.dataGridView1.GridColor = System.Drawing.SystemColors.ControlText;
+            this.dataGridView1.Location = new System.Drawing.Point(12, 222);
+            this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 25;
             this.dataGridView1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(743, 163);
             this.dataGridView1.TabIndex = 9;
             // 
@@ -276,29 +317,36 @@ partial class FormCadastroAluno
             // 
             // buttonExcluir
             // 
-            this.buttonExcluir.Location = new System.Drawing.Point(638, 390);
+            this.buttonExcluir.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonExcluir.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Tomato;
+            this.buttonExcluir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonExcluir.Location = new System.Drawing.Point(638, 391);
             this.buttonExcluir.Name = "buttonExcluir";
             this.buttonExcluir.Size = new System.Drawing.Size(117, 23);
             this.buttonExcluir.TabIndex = 11;
             this.buttonExcluir.Text = "Excluir";
-            this.buttonExcluir.UseVisualStyleBackColor = true;
+            this.buttonExcluir.UseVisualStyleBackColor = false;
             this.buttonExcluir.Click += new System.EventHandler(this.ButtonExcluir_Click);
             // 
             // buttonEditar
             // 
-            this.buttonEditar.Location = new System.Drawing.Point(512, 390);
+            this.buttonEditar.BackColor = System.Drawing.SystemColors.Control;
+            this.buttonEditar.FlatAppearance.MouseOverBackColor = System.Drawing.Color.LightSkyBlue;
+            this.buttonEditar.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonEditar.Location = new System.Drawing.Point(512, 391);
             this.buttonEditar.Name = "buttonEditar";
             this.buttonEditar.Size = new System.Drawing.Size(107, 23);
             this.buttonEditar.TabIndex = 10;
             this.buttonEditar.Text = "Editar";
-            this.buttonEditar.UseVisualStyleBackColor = true;
+            this.buttonEditar.UseVisualStyleBackColor = false;
             this.buttonEditar.Click += new System.EventHandler(this.ButtonEditar_Click);
             // 
             // FormCadastroAluno
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(773, 450);
+            this.BackColor = System.Drawing.Color.LightBlue;
+            this.ClientSize = new System.Drawing.Size(764, 429);
             this.Controls.Add(this.buttonEditar);
             this.Controls.Add(this.buttonExcluir);
             this.Controls.Add(this.dataGridView1);
@@ -335,7 +383,6 @@ partial class FormCadastroAluno
     private Button buttonPesquisa;
     private MaskedTextBox maskedTextBoxNascimento;
     private DataGridView dataGridView1;
-    private Button buttonEditar;
     private TextBox textBoxCPF;
     private BindingSource alunoBindingSource;
     private ComboBox comboBoxSexo;
@@ -345,4 +392,5 @@ partial class FormCadastroAluno
     private DataGridViewTextBoxColumn sexoDataGridViewTextBoxColumn;
     private DataGridViewTextBoxColumn nascimentoDataGridViewTextBoxColumn;
     private DataGridViewTextBoxColumn cpfDataGridViewTextBoxColumn;
+    private Button buttonEditar;
 }

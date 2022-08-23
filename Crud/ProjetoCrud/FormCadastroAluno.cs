@@ -17,18 +17,9 @@ public partial class FormCadastroAluno : Form
         }
     }
 
-    //RESTRIÇÕES PARA AS CAIXAS DE TEXTO
     private void TextBoxMatricula_KeyPress(object sender, KeyPressEventArgs e)
     {
-        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
-        {
-            e.Handled = true;
-        }
-    }
-
-    private void TextBoxCPF_KeyPress(object sender, KeyPressEventArgs e)
-    {
-        if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
+        if (!(char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back))
         {
             e.Handled = true;
         }
@@ -42,7 +33,6 @@ public partial class FormCadastroAluno : Form
         }
     }
 
-    //EVENTOS DOS CLIQUES DOS BOTÕES DEPENDENDO DO NOME
     private void ButtonLimparOuCancelar_Click(object sender, EventArgs e)
     {
         if (buttonLimparOuCancelar.Text == "Limpar")
@@ -60,7 +50,6 @@ public partial class FormCadastroAluno : Form
         if (!DadosSaoValidos())
         {
             return;
-
         }
         else
         {
@@ -68,10 +57,12 @@ public partial class FormCadastroAluno : Form
             if (buttonAdicionarOuModificar.Text == "Adicionar")
             {
                 repositorio.Add(aluno);
+                MostreMensagemDe("Sucesso!", "Aluno adicionado com sucesso");
             }
             if (buttonAdicionarOuModificar.Text == "Modificar")
             {
                 repositorio.Update(aluno);
+                MostreMensagemDe("Sucesso!", "Aluno modificado com sucesso");
             }
             VolteTelaInicial();
             PreencheGridOrdenado();
@@ -106,7 +97,6 @@ public partial class FormCadastroAluno : Form
         return novoAluno;
     }
 
-    //BOTÕES QUE NÃO MUDAM DE FUNCIONALIDADE
     private void ButtonEditar_Click(object sender, EventArgs e)
     {
         textBoxMatricula.Enabled = false;
@@ -128,6 +118,7 @@ public partial class FormCadastroAluno : Form
         {
             var aluno = repositorio.GetByMatricula((int)dataGridView1.CurrentRow.Cells[0].Value);
             repositorio.Remove(aluno);
+            MostreMensagemDe("Sucesso!", "Aluno removido com sucesso");
             PreencheGridOrdenado();
             VolteTelaInicial();
         }
@@ -135,11 +126,34 @@ public partial class FormCadastroAluno : Form
 
     private void ButtonPesquisa_Click(object sender, EventArgs e)
     {
-        var alunos = repositorio.GetByContendoNoNome(textBoxPesquisa.Text);
-        alunoSource.DataSource = alunos;
-    } 
+        IEnumerable<Aluno> alunos;
+        bool ehNumerico = int.TryParse(textBoxPesquisa.Text, out _);
+        if (ehNumerico)
+        {
+            alunos = repositorio.GetByContendoNaMatricula(textBoxPesquisa.Text);
+        }
+        else
+        {
+            alunos = repositorio.GetByContendoNoNome(textBoxPesquisa.Text);
+        }
+        alunoSource.DataSource = alunos.OrderBy(aluno => aluno.Matricula);
+    }
 
-    //FUNÇÕES QUE PODEM SER ÚTEIS
+    private void TextBoxPesquisa_TextChanged(object sender, EventArgs e)
+    {
+        IEnumerable<Aluno> alunos;
+        bool ehNumerico = int.TryParse(textBoxPesquisa.Text, out _);
+        if (ehNumerico)
+        {
+            alunos = repositorio.GetByContendoNaMatricula(textBoxPesquisa.Text).OrderBy(aluno => aluno.Matricula);
+        }
+        else
+        {
+            alunos = repositorio.GetByContendoNoNome(textBoxPesquisa.Text).OrderBy(aluno => aluno.Nome);
+        }
+        alunoSource.DataSource = alunos;
+    }
+
     private void VolteTelaInicial()
     {
         textBoxMatricula.Enabled = true;
@@ -172,9 +186,16 @@ public partial class FormCadastroAluno : Form
         textBoxPesquisa.Clear();
     }
 
-    private static void MostreMensagemDeErro(string mensagem)
+    private static void MostreMensagemDe(string tipo, string mensagem)
     {
-        MessageBox.Show(mensagem, "Atenção", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        if (tipo == "Erro!")
+        {
+            MessageBox.Show(mensagem, tipo, MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+        else if (tipo == "Sucesso!")
+        {
+            MessageBox.Show(mensagem, tipo, MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
 
     private bool DadosSaoValidos()
@@ -182,9 +203,15 @@ public partial class FormCadastroAluno : Form
         string matricula = textBoxMatricula.Text;
         if (matricula == string.Empty)
         {
-            MostreMensagemDeErro("Matrícula deve conter ao menos um dígito");
+            MostreMensagemDe("Erro!", "Matrícula deve conter ao menos um dígito");
             textBoxMatricula.Focus();
             return false;
+        }
+        else if (matricula == "0")
+        {
+            MostreMensagemDe("Erro!", "Matrícula não pode ser 0");
+            textBoxMatricula.Focus();
+            textBoxMatricula.Clear();
         }
         else
         {
@@ -192,7 +219,7 @@ public partial class FormCadastroAluno : Form
             {
                 if (aluno.Matricula == Convert.ToInt32(matricula) && buttonAdicionarOuModificar.Text == "Adicionar")
                 {
-                    MostreMensagemDeErro("Já existe um aluno com essa matrícula");
+                    MostreMensagemDe("Erro!", "Já existe um aluno com essa matrícula");
                     textBoxMatricula.Clear();
                     textBoxMatricula.Focus();
                     return false;
@@ -203,7 +230,7 @@ public partial class FormCadastroAluno : Form
         string nome = textBoxNome.Text;
         if (nome == string.Empty)
         {
-            MostreMensagemDeErro("Nome deve conter ao menos um dígito");
+            MostreMensagemDe("Erro!", "Nome deve conter ao menos um dígito");
             textBoxNome.Focus();
             return false;
         }
@@ -211,7 +238,7 @@ public partial class FormCadastroAluno : Form
         int sexo = comboBoxSexo.SelectedIndex;
         if (sexo == -1)
         {
-            MostreMensagemDeErro("Escolha uma opçao para o sexo");
+            MostreMensagemDe("Erro!", "Escolha uma opçao para o sexo");
             comboBoxSexo.Focus();
             return false;
         }
@@ -222,13 +249,14 @@ public partial class FormCadastroAluno : Form
             DateTime nascimento = Convert.ToDateTime(maskedTextBoxNascimento.Text);
             if (nascimento.Year < 1900 || nascimento > dataAtual)
             {
-                MostreMensagemDeErro($"Digite uma data entre 01/01/1900 e {dataAtual.ToShortDateString()}");
+                MostreMensagemDe("Erro!", $"Digite uma data entre 01/01/1900 e {dataAtual.ToShortDateString()}");
+                maskedTextBoxNascimento.Focus();
                 return false;
             }
         }
         catch (Exception)
         {
-            MostreMensagemDeErro("Insira um data válida");
+            MostreMensagemDe("Erro!", "Insira um data válida");
             maskedTextBoxNascimento.Focus();
             return false;
         }
@@ -240,7 +268,7 @@ public partial class FormCadastroAluno : Form
         }
         else if (cpf == "inválido")
         {
-            MostreMensagemDeErro("Este CPF não é válido");
+            MostreMensagemDe("Erro!", "Este CPF não é válido");
             textBoxCPF.Clear();
             textBoxCPF.Focus();
             return false;
@@ -251,7 +279,7 @@ public partial class FormCadastroAluno : Form
             {
                 if(aluno.Cpf == cpf && aluno.Matricula.ToString() != matricula)
                 {
-                    MostreMensagemDeErro("Ja existe um aluno com esse CPF");
+                    MostreMensagemDe("Erro!", "Ja existe um aluno com esse CPF");
                     textBoxCPF.Clear();
                     textBoxCPF.Focus();
                     return false;
@@ -259,21 +287,6 @@ public partial class FormCadastroAluno : Form
             }
         }
         return true;
-    }
-
-    private void TextBoxPesquisa_TextChanged(object sender, EventArgs e)
-    {
-        bool ehNumerico = int.TryParse(textBoxPesquisa.Text, out _);
-        if (ehNumerico)
-        {
-            var alunos = repositorio.GetByContendoNaMatricula(textBoxPesquisa.Text);
-            alunoSource.DataSource = alunos;
-        }
-        else
-        {
-           var alunos = repositorio.GetByContendoNoNome(textBoxPesquisa.Text);
-           alunoSource.DataSource = alunos;
-        }
     }
 
     private void PreencheGridOrdenado()
