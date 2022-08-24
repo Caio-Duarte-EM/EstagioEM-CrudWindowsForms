@@ -29,11 +29,11 @@ public class RepositorioAluno : RepositorioAbstrato<Aluno>
     {
         conn = new(caminhoConexao);
         conn.Open();
-        FbCommand comandoUpdate = new($"UPDATE TBALUNO SET ALUMATRICULA = {aluno.Matricula}," + 
+        FbCommand comandoUpdate = new($"UPDATE TBALUNO SET ALUMATRICULA = {aluno.Matricula}," +
             $"ALUNOME = '{aluno.Nome}'," +
             $"ALUSEXO = {(int)aluno.Sexo}," +
             $"ALUNASCIMENTO = '{aluno.Nascimento:dd.MM.yyyy}'," +
-            $"ALUCPF = '{aluno.Cpf}'" + 
+            $"ALUCPF = '{aluno.Cpf}'" +
             $"WHERE ALUMATRICULA = {aluno.Matricula}; ", conn);
         comandoUpdate.ExecuteNonQuery();
         conn.Close();
@@ -51,12 +51,12 @@ public class RepositorioAluno : RepositorioAbstrato<Aluno>
             Aluno aluno = new(
                 Convert.ToInt32(reader["ALUMATRICULA"]),
                 reader["ALUNOME"].ToString() ?? "",
-                (EnumeradorSexo)Convert.ToInt32(reader["ALUSEXO"].ToString()),
+                (EnumeradorSexo)reader["ALUSEXO"],
                 Convert.ToDateTime(reader["ALUNASCIMENTO"]),
                 reader["ALUCPF"].ToString() ?? ""
             );
             alunos.Add(aluno);
-        } 
+        }
         reader.Close();
         conn.Close();
         return alunos;
@@ -74,7 +74,7 @@ public class RepositorioAluno : RepositorioAbstrato<Aluno>
 
     public IEnumerable<Aluno> GetByContendoNoNome(string parteDoNome)
     {
-        return Get(aluno => aluno.Nome.Contains(parteDoNome)).ToList();
+        return Get(aluno => aluno.Nome.ToLower().Contains(parteDoNome)).ToList();
     }
 
     public IEnumerable<Aluno> GetByContendoNaMatricula(string parteDaMatricula)
