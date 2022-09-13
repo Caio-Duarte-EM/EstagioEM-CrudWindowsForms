@@ -6,7 +6,7 @@ public partial class FormCadastroAluno : Form
     public FormCadastroAluno()
     {
         InitializeComponent();
-        PreencheGridOrdenado();
+        PreencheGrid();
         if (!repositorio.GetAll().Any())
         {
             buttonEditar.Enabled = false;
@@ -132,7 +132,7 @@ public partial class FormCadastroAluno : Form
         {
             alunos = repositorio.GetByContendoNoNome(textBoxPesquisa.Text);
         }
-        alunoSource.DataSource = alunos.OrderBy(aluno => aluno.Matricula);
+        alunoSource.DataSource = alunos.OrderBy(aluno => aluno.Nome);
     }
 
     private void TextBoxPesquisa_TextChanged(object sender, EventArgs e)
@@ -141,11 +141,11 @@ public partial class FormCadastroAluno : Form
         bool ehNumerico = int.TryParse(textBoxPesquisa.Text, out _);
         if (ehNumerico)
         {
-            alunos = repositorio.GetByContendoNaMatricula(textBoxPesquisa.Text).OrderBy(aluno => aluno.Matricula);
+            alunos = repositorio.GetByContendoNaMatricula(textBoxPesquisa.Text);
         }
         else
         {
-            alunos = repositorio.GetByContendoNoNome(textBoxPesquisa.Text.ToLower()).OrderBy(aluno => aluno.Nome);
+            alunos = repositorio.GetByContendoNoNome(textBoxPesquisa.Text.ToLower());
         }
         if (!alunos.Any())
         {
@@ -167,7 +167,7 @@ public partial class FormCadastroAluno : Form
         buttonLimparOuCancelar.Text = "Limpar";
         groupBoxNovoAluno.Text = "Novo Aluno";
         LimpeTela();
-        PreencheGridOrdenado();
+        PreencheGrid();
 
         if (!repositorio.GetAll().Any())
         {
@@ -299,9 +299,9 @@ public partial class FormCadastroAluno : Form
         return true;
     }
 
-    private void PreencheGridOrdenado()
+    private void PreencheGrid()
     {
-        alunoSource.DataSource = repositorio.GetAll().OrderBy(aluno => aluno.Matricula);
+        alunoSource.DataSource = repositorio.GetAll();
         dataGridView1.DataSource = alunoSource;
         dataGridView1.ClearSelection();
     }

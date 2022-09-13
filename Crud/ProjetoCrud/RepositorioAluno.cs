@@ -59,7 +59,7 @@ public class RepositorioAluno : RepositorioAbstrato<Aluno>
         }
         reader.Close();
         conn.Close();
-        return alunos;
+        return alunos.OrderBy(aluno => aluno.Matricula);
     }
 
     public override IEnumerable<Aluno> Get(Expression<Func<Aluno, bool>> predicate)

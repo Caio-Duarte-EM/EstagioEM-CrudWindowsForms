@@ -1,12 +1,11 @@
 ﻿using System.ComponentModel;
 
-namespace ProjetoCrud
+namespace ProjetoCrud;
+
+public enum EnumeradorSexo
 {
-    public enum EnumeradorSexo
-    {
-        [Description("Masculino")]
-        Masculino,
-        [Description("Feminino")]
-        Feminino
-    }
+    [Description("Masculino")]
+    Masculino,
+    [Description("Feminino")]
+    Feminino
 }
